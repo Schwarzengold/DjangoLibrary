@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #ffe259, #3b9eff); 
+        }
+
+        .register-container {
+            background: white;
+            padding: 30px;
+            border-radius: 16px; 
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+            width: 400px; 
+            margin: 20px; 
+        }
+
+        .register-container h2 {
+            margin-bottom: 20px;
+            text-align: left; 
+            font-size: 24px;
+            color: #333;
+        }
+
+        .register-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .register-container form label {
+            font-size: 14px;
+            margin-bottom: 4px; 
+            color: #555;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px; 
+            outline: none;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box; 
+        }
+
+        .form-group input:focus {
+            border-color: #3b9eff; 
+        }
+
+        .form-group .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 14px;
+            color: #888;
+            user-select: none;
+            transition: color 0.3s ease;
+        }
+
+        .form-group .toggle-password:hover {
+            color: #555;
+        }
+
+        .register-container .error {
+            color: red;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .register-container form button {
+            background: #4a90e2; 
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 8px; 
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .register-container form button:hover {
+            background: #357ab8; 
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h2>Create Account</h2>
+        <form method="post">
+            {% csrf_token %}
+            <label for="id_username">Username:</label>
+            <div class="form-group">
+                {{ form.username }}
+            </div>
+            {% if form.username.errors %}
+            <div class="error">
+                {{ form.username.errors.0 }}
+            </div>
+            {% endif %}
+
+            <label for="id_first_name">First Name:</label>
+            <div class="form-group">
+                {{ form.first_name }}
+            </div>
+            {% if form.first_name.errors %}
+            <div class="error">
+                {{ form.first_name.errors.0 }}
+            </div>
+            {% endif %}
+
+            <label for="id_last_name">Last Name (optional):</label>
+            <div class="form-group">
+                {{ form.last_name }}
+            </div>
+            {% if form.last_name.errors %}
+            <div class="error">
+                {{ form.last_name.errors.0 }}
+            </div>
+            {% endif %}
+
+            <label for="id_email">Email:</label>
+            <div class="form-group">
+                {{ form.email }}
+            </div>
+            {% if form.email.errors %}
+            <div class="error">
+                {{ form.email.errors.0 }}
+            </div>
+            {% endif %}
+
+            <label for="id_password1">Password:</label>
+            <div class="form-group">
+                {{ form.password1 }}
+                <span class="toggle-password" onclick="togglePassword('id_password1')">👁️</span>
+            </div>
+            {% if form.password1.errors %}
+            <div class="error">
+                {{ form.password1.errors.0 }}
+            </div>
+            {% endif %}
+
+            <label for="id_password2">Confirm Password:</label>
+            <div class="form-group">
+                {{ form.password2 }}
+                <span class="toggle-password" onclick="togglePassword('id_password2')">👁️</span>
+            </div>
+            {% if form.password2.errors %}
+            <div class="error">
+                {{ form.password2.errors.0 }}
+            </div>
+            {% endif %}
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+    <script>
+        function togglePassword(fieldId) {
+            const input = document.getElementById(fieldId);
+            const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+            input.setAttribute('type', type);
+        }
+    </script>
+</body>
+</html>

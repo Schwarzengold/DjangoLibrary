@@ -9,8 +9,12 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: #f5f5f5;
+            min-height: 100vh; 
+            background: linear-gradient(to bottom, #ffe259, #3b9eff); 
+            display: flex;
+            flex-direction: column;
         }
+
         header {
             background: #4a90e2;
             color: white;
@@ -19,68 +23,219 @@
             justify-content: space-between;
             align-items: center;
         }
+
         header .logo {
             display: flex;
             align-items: center;
         }
+
         header .logo img {
             width: 40px;
             height: 40px;
             margin-right: 10px;
         }
+
         header .logo .text {
             font-size: 24px;
             font-weight: bold;
         }
+
         header .auth-buttons a {
             margin: 0 10px;
             text-decoration: none;
             color: white;
             font-weight: bold;
+            display: flex;
+            align-items: center;
         }
+
+        header .auth-buttons a img {
+            margin-right: 5px;
+            width: 16px;
+            height: 16px;
+        }
+
         .container {
             display: flex;
             margin: 20px;
+            gap: 20px;
         }
+
         .menu {
-            width: 25%;
+            width: 200px; 
             background: white;
             border-radius: 8px;
             padding: 15px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+
         .menu h3 {
             margin-bottom: 10px;
         }
+
         .menu ul {
             list-style: none;
             padding: 0;
         }
+
         .menu ul li {
             margin: 10px 0;
         }
+
         .menu ul li a {
             text-decoration: none;
             color: #4a90e2;
             font-weight: bold;
         }
+
         .content {
-            width: 75%;
+            flex-grow: 1; 
             padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+
+        .books-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .book-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            background: #fafafa;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .book-card h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .book-card p {
+            margin: 5px 0;
+        }
+
+        .book-card a {
+            display: inline-block;
+            margin: 5px 0;
+            padding: 10px;
+            text-decoration: none;
+            font-size: 14px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .book-card .read-btn {
+            background: #4a90e2;
+            color: white;
+        }
+
+        .book-card .read-btn:hover {
+            background: #357ab8;
+        }
+
+        .book-card .delete-btn {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .book-card .delete-btn:hover {
+            background: #c0392b;
+        }
+
+        .add-book-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-align: center;
+            background: #4caf50;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .add-book-btn:hover {
+            background: #3e8e41;
+        }
+        .edit-btn {
+            background: #ffa500;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+        
+        .edit-btn:hover {
+            background: #cc8400;
+        }
+        
     </style>
 </head>
 <body>
     <header>
-        <div class="auth-buttons">
-            <a href="#">Register</a>
-            <a href="#">Login</a>
+        <div class="auth-buttons" style="display: flex; gap: 10px;">
+            {% if user.is_authenticated %}
+                <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="
+                        background: #f44336;
+                        color: white;
+                        border: none;
+                        padding: 10px 20px;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                        font-weight: bold;
+                        display: flex;
+                        align-items: center;
+                    ">
+                        <img src="https://cdn-icons-png.flaticon.com/512/992/992703.png" alt="Logout Icon" style="margin-right: 5px; width: 16px; height: 16px;">
+                        Logout
+                    </button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" style="
+                    display: inline-block;
+                    background: #ff9800;
+                    color: black;
+                    text-decoration: none;
+                    padding: 10px 20px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-weight: bold;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                ">Login</a>
+                <a href="{% url 'register' %}" style="
+                    display: inline-block;
+                    background: #fdd835;
+                    color: black;
+                    text-decoration: none;
+                    padding: 10px 20px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-weight: bold;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                ">Register</a>
+            {% endif %}
         </div>
-        <div class="logo">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjeMUsgCo-P0FR_-cN3Wqh5Dvq4AZiSw-riQ&s" alt="Library Logo">
-            <div class="text">AwesomeBooks</div>
+        <div class="logo" style="display: flex; align-items: center;">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjeMUsgCo-P0FR_-cN3Wqh5Dvq4AZiSw-riQ&s" alt="Library Logo" style="width: 40px; height: 40px; margin-right: 10px;">
+            <span style="font-size: 24px; font-weight: bold; color: white;">Awesome Books</span>
         </div>
-    </header>
+        </header>
+        
+
     <div class="container">
         <div class="menu">
             <h3>Categories</h3>
@@ -99,7 +254,23 @@
             </ul>
         </div>
         <div class="content">
-            <p></p>
+            {% if user.is_authenticated and user.is_staff %}
+            <a href="{% url 'add_book' %}" class="add-book-btn">Add New Book</a>
+            {% endif %}
+            <div class="books-list">
+                {% for book in books %}
+                <div class="book-card">
+                    <h2>{{ book.title }}</h2>
+                    <p><strong>Author:</strong> {{ book.author }}</p>
+                    <p><strong>Category:</strong> {{ book.category }}</p>
+                    <a href="{% url 'book_detail' book.pk %}" class="read-btn">Read More</a>
+                    {% if user.is_authenticated and user.is_staff %}
+                    <a href="{% url 'delete_book' book.pk %}" class="delete-btn">Delete</a>
+                    <a href="{% url 'edit_book' book.pk %}" class="edit-btn">Edit</a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </body>

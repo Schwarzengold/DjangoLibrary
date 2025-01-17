@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #ffe259, #3b9eff);
+        }
+
+        .login-container {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            margin: 20px;
+        }
+
+        .login-container h2 {
+            margin-bottom: 20px;
+            text-align: left;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .login-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus {
+            border-color: #3b9eff;
+        }
+
+        .login-container .error {
+            color: red;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .login-container form button {
+            background: #4a90e2;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .login-container form button:hover {
+            background: #357ab8;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+            <div class="error">
+                {{ form.non_field_errors.0 }}
+            </div>
+            {% endif %}
+            
+            <label for="id_username">Username:</label>
+            <div class="form-group">
+                {{ form.username }}
+            </div>
+            {% if form.username.errors %}
+            <div class="error">
+                {{ form.username.errors.0 }}
+            </div>
+            {% endif %}
+
+            <label for="id_password">Password:</label>
+            <div class="form-group">
+                {{ form.password }}
+            </div>
+            {% if form.password.errors %}
+            <div class="error">
+                {{ form.password.errors.0 }}
+            </div>
+            {% endif %}
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+</html>

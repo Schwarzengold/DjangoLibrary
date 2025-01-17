@@ -40,6 +40,10 @@ INSTALLED_APPS = [
     'library',  
 ]
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+X_FRAME_OPTIONS = None
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -48,7 +52,6 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'LibraryProject.urls'
@@ -77,10 +80,19 @@ WSGI_APPLICATION = 'LibraryProject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'mssql',  
+        'NAME': 'ITStepDB',
+        'USER': 'Schwarzengold_SQLLogin_1',
+        'PASSWORD': 'qw8473abb4',
+        'HOST': 'ITStepDB.mssql.somee.com',
+        'PORT': '',  
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+            'TrustServerCertificate': 'yes', 
+        },
+    },
 }
+
 
 
 # Password validation
@@ -127,3 +139,8 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = '/'
+
+LOGOUT_REDIRECT_URL = '/'
+
