@@ -1,3 +1,5 @@
 {
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "appService.defaultWebAppToDeploy": "undefined/subscriptions/be00bdc8-5aa9-4064-80a6-328d11d279b6/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/DjangoLibrary",
+    "appService.deploySubpath": "."
 }

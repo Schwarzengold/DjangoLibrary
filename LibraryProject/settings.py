@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -144,3 +143,6 @@ LOGIN_REDIRECT_URL = '/'
 
 LOGOUT_REDIRECT_URL = '/'
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://djangolibrary.azurewebsites.net'
+]
