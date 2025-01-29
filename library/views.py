@@ -1,20 +1,19 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import login
 from .forms import CustomUserCreationForm, BookForm
-from .models import Book
+from .models import Book, Author
 from django.http import FileResponse, HttpResponseNotFound
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from .forms import AuthorForm
 import os
 
 
 def main(request):
-    category_filter = request.GET.get('category', '')  
-    search_query = request.GET.get('search', '')  
+    category_filter = request.GET.get('category', 'All') 
+    search_query = request.GET.get('search', '')
 
     books = Book.objects.all()
-    categories = ["Authors", "Fantasy", "Science Fiction", "Historical", "Adventure",
-                  "Mystery", "Romance", "Horror", "Biography", "Poetry", "Drama"]
 
     if category_filter and category_filter != 'All':
         books = books.filter(category=category_filter)
@@ -22,13 +21,17 @@ def main(request):
     if search_query:
         books = books.filter(title__icontains=search_query)
 
+    categories = [
+        "All", "Authors", "Fantasy", "Science Fiction", "Historical",
+        "Adventure", "Mystery", "Romance", "Horror", "Biography", "Poetry", "Drama"
+    ]
+
     return render(request, 'library/main.html', {
         'books': books,
         'categories': categories,
         'category_filter': category_filter,
         'search_query': search_query,
     })
-
 
 def serve_pdf(request, path):
     file_path = os.path.join(settings.MEDIA_ROOT, path)
@@ -87,3 +90,44 @@ def edit_book(request, pk):
     else:
         form = BookForm(instance=book)
     return render(request, 'library/edit_book.html', {'form': form, 'book': book})
+
+def author_detail(request, pk):
+    author = get_object_or_404(Author, pk=pk)
+    return render(request, 'library/author_detail.html', {'author': author})
+
+
+def author_list(request):
+    authors = Author.objects.all()
+    return render(request, 'library/author_list.html', {'authors': authors})
+
+def author_detail(request, pk):
+    author = get_object_or_404(Author, pk=pk)
+    return render(request, 'library/author_detail.html', {'author': author})
+
+def add_author(request):
+    if request.method == 'POST':
+        form = AuthorForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('author_list')
+    else:
+        form = AuthorForm()
+    return render(request, 'library/add_author.html', {'form': form})
+
+def edit_author(request, pk):
+    author = get_object_or_404(Author, pk=pk)
+    if request.method == 'POST':
+        form = AuthorForm(request.POST, request.FILES, instance=author)
+        if form.is_valid():
+            form.save()
+            return redirect('author_list')
+    else:
+        form = AuthorForm(instance=author)
+    return render(request, 'library/edit_author.html', {'form': form, 'author': author})
+
+def delete_author(request, pk):
+    author = get_object_or_404(Author, pk=pk)
+    if request.method == 'POST':
+        author.delete()
+        return redirect('author_list')
+    return render(request, 'library/delete_author.html', {'author': author})

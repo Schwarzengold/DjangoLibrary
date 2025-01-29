@@ -7,7 +7,7 @@
     <div class="header-left">
         <a href="{% url 'main' %}" class="home-btn">
             <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Home Icon">
-            Home
+            Головна
         </a>
     </div>
     <div class="auth-buttons">
@@ -27,7 +27,7 @@
                     align-items: center;
                 ">
                     <img src="https://cdn-icons-png.flaticon.com/512/992/992703.png" alt="Logout Icon" style="margin-right: 5px; width: 16px; height: 16px;">
-                    Logout
+                    Вийти
                 </button>
             </form>
         {% endif %}
@@ -37,11 +37,11 @@
 <div class="book-detail-container">
     <div class="book-detail">
         <h1 class="book-title">{{ book.title }}</h1>
-        <p class="book-info"><strong>Author:</strong> {{ book.author }}</p>
-        <p class="book-info"><strong>Category:</strong> {{ book.category }}</p>
-        <p class="book-description"><strong>Description:</strong> {{ book.description }}</p>
+        <p class="book-info"><strong>Автор:</strong> {{ book.author }}</p>
+        <p class="book-info"><strong>Категорія:</strong> {{ book.category }}</p>
+        <p class="book-description"><strong>Опис:</strong> {{ book.description }}</p>
 
-        <h2 class="read-section-title">Read Book</h2>
+        <h2 class="read-section-title">Читати книгу</h2>
         <iframe 
             src="{% url 'serve_pdf' book.pdf_file.name %}" 
             class="pdf-viewer">

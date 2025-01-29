@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Book
+from .models import Book, Author
+
 
 class CustomUserCreationForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True, label="First Name")
@@ -21,4 +22,9 @@ class CustomUserCreationForm(UserCreationForm):
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
-        fields = ['title', 'author', 'category', 'description', 'pdf_file']
+        fields = ['title', 'author', 'category', 'description', 'pdf_file','cover']
+        
+class AuthorForm(forms.ModelForm):
+    class Meta:
+        model = Author
+        fields = ['name', 'photo', 'biography']

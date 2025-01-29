@@ -91,24 +91,32 @@
         .form-container form button:hover {
             background: #357ab8;
         }
+        
+        label[for*="cover-clear"],
+        input[id*="cover-clear"] {
+        display: none;
+        }
+
     </style>
 </head>
 <body>
     <div class="form-container">
-        <h2>Edit Book</h2>
+        <h2>Редагувати книгу</h2>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <label for="id_title">Title</label>
+            <label for="id_title">Назва</label>
             {{ form.title }}
-            <label for="id_author">Author</label>
+            <label for="id_author">Автор</label>
             {{ form.author }}
-            <label for="id_category">Category</label>
+            <label for="id_category">Категорія</label>
             {{ form.category }}
-            <label for="id_description">Description</label>
+            <label for="id_description">Опис</label>
             {{ form.description }}
             <label for="id_pdf_file">PDF File</label>
             {{ form.pdf_file }}
-            <button type="submit">Save Changes</button>
+            <label for="id_cover">Обкладинка</label>
+            {{ form.cover }}
+            <button type="submit">Зберегти зміни</button>
         </form>
     </div>
 </body>

@@ -1,0 +1,23 @@
+{% extends "library/base.html" %}
+
+{% block content %}
+<h2>Authors</h2>
+<a href="{% url 'add_author' %}" class="add-book-btn">Add New Author</a>
+
+<div class="books-list">
+    {% for author in authors %}
+    <div class="book-card">
+        {% if author.photo %}
+            <img src="{{ author.photo.url }}" alt="{{ author.name }}" class="book-cover">
+        {% endif %}
+        <h2>{{ author.name }}</h2>
+        <p>{{ author.biography|truncatechars:100 }}</p>
+        <a href="{% url 'author_detail' author.pk %}" class="read-btn">Read More</a>
+        {% if user.is_authenticated and user.is_staff %}
+            <a href="{% url 'edit_author' author.pk %}" class="edit-btn">&#9998;</a>
+            <a href="{% url 'delete_author' author.pk %}" class="delete-btn">&#128465;</a>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
