@@ -1,0 +1,17 @@
+<div class="books-list">
+  {% for author in authors %}
+  <div class="book-card">
+      {% if author.photo %}
+          <img src="{{ author.photo.url }}" alt="{{ author.name }} Photo" class="book-cover">
+      {% endif %}
+      <h2>{{ author.name }}</h2>
+      <a href="{% url 'author_detail' author.pk %}" class="read-btn">Докладніше</a>
+      {% if user.is_authenticated and user.is_staff %}
+          <a href="{% url 'edit_author' author.pk %}" class="edit-btn"><i class="fa fa-pencil"></i></a>
+          <a href="{% url 'delete_author' author.pk %}" class="delete-btn"><i class="fa fa-trash"></i></a>
+      {% endif %}
+  </div>
+  {% empty %}
+  <p>Немає авторів.</p>
+  {% endfor %}
+</div>

@@ -1,11 +1,111 @@
-{% extends "library/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редагувати автора</title>
+    <style>
+        /* Те же стили, что и в edit_book.html */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #ffe259, #3b9eff);
+        }
 
-{% block content %}
-<h2>Edit Author</h2>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="edit-btn">Save Changes</button>
-</form>
-<a href="{% url 'author_list' %}">Cancel</a>
-{% endblock %}
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            margin: 20px;
+        }
+
+        .form-container h2 {
+            margin-bottom: 20px;
+            text-align: left;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-container form label {
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .form-container form input,
+        .form-container form textarea {
+            margin-bottom: 15px;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .form-container form input:focus,
+        .form-container form textarea:focus {
+            border-color: #3b9eff;
+        }
+
+        .form-container form button {
+            background: #4a90e2;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .form-container form button:hover {
+            background: #357ab8;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Редагувати автора</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <label for="id_name">Ім'я автора:</label>
+            {{ form.name }}
+            {% if form.name.errors %}
+            <div style="color: red;">{{ form.name.errors.0 }}</div>
+            {% endif %}
+
+            <label for="id_photo">Фото:</label>
+            {{ form.photo }}
+            {% if form.photo.errors %}
+            <div style="color: red;">{{ form.photo.errors.0 }}</div>
+            {% endif %}
+
+            <label for="id_biography">Біографія:</label>
+            {{ form.biography }}
+            {% if form.biography.errors %}
+            <div style="color: red;">{{ form.biography.errors.0 }}</div>
+            {% endif %}
+
+            <button type="submit">Зберегти зміни</button>
+        </form>
+    </div>
+</body>
+</html>

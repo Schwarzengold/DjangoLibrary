@@ -4,45 +4,143 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ author.name }}</title>
-    <style>
-        .author-detail {
-            text-align: center;
-            max-width: 600px;
-            margin: 50px auto;
-            background: white;
-            padding: 20px;
-            border-radius: 16px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-
-        .author-detail img {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 20px;
-        }
-
-        .author-detail h2 {
-            font-size: 28px;
-            margin-bottom: 20px;
-        }
-
-        .author-detail p {
-            font-size: 16px;
-            color: #555;
-            line-height: 1.6;
-        }
-    </style>
 </head>
 <body>
-    <div class="author-detail">
-        {% if author.photo %}
-            <img src="{{ author.photo.url }}" alt="{{ author.name }}">
-        {% endif %}
-        <h2>{{ author.name }}</h2>
-        <p>{{ author.biography }}</p>
-        <a href="{% url 'main' %}" style="color: #4a90e2;">Повернутися</a>
+<header>
+    <div class="header-left">
+        <a href="{% url 'main' %}" class="home-btn">
+            <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Home Icon">
+            Головна
+        </a>
     </div>
+    <div class="auth-buttons">
+        {% if user.is_authenticated %}
+            <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" style="
+                    background: #f44336;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                    font-weight: bold;
+                    display: flex;
+                    align-items: center;
+                ">
+                    <img src="https://cdn-icons-png.flaticon.com/512/992/992703.png" alt="Logout Icon" style="margin-right: 5px; width: 16px; height: 16px;">
+                    Вийти
+                </button>
+            </form>
+        {% endif %}
+    </div>
+</header>
+
+<div class="book-detail-container">
+    <div class="book-detail">
+        <!-- Если есть фото автора -->
+        {% if author.photo %}
+            <div style="text-align: center; margin-bottom: 20px;">
+                <img src="{{ author.photo.url }}" alt="{{ author.name }}" style="
+                    width: 200px;
+                    height: 200px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    box-shadow: 0px 6px 15px rgba(0,0,0,0.53);
+                ">
+            </div>
+        {% endif %}
+
+        <h1 class="book-title">{{ author.name }}</h1>
+
+        <p class="book-description">
+            <strong>Біографія:</strong><br>
+            {{ author.biography }}
+        </p>
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to bottom, #ffe259, #3b9eff) no-repeat;
+        background-attachment: fixed;
+        background-size: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    header {
+        background: #4a90e2;
+        color: white;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    header .header-left {
+        display: flex;
+        align-items: center;
+    }
+
+    header .header-left .home-btn {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        font-size: 16px;
+        background: #2196f3;
+        padding: 10px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: background 0.3s ease;
+    }
+
+    header .header-left .home-btn img {
+        margin-right: 5px;
+        width: 16px;
+        height: 16px;
+    }
+
+    header .header-left .home-btn:hover {
+        background: #1769aa;
+    }
+
+    .book-detail-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px;
+        padding: 20px;
+    }
+
+    .book-detail {
+        background: white;
+        padding: 30px;
+        border-radius: 16px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        max-width: 900px;
+        width: 100%;
+        text-align: left;
+    }
+
+    .book-title {
+        font-size: 26px;
+        text-shadow: 1px 2px 5px rgba(0, 0, 0, 0.24);
+        color: #333;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .book-description {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 20px;
+        white-space: pre-wrap; /* чтобы переводы строк внутри биографии отображались */
+    }
+</style>
 </body>
 </html>

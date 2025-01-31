@@ -1,0 +1,92 @@
+{% extends "library/base_generic.html" %}
+{% load static %}
+
+{% block title %}Автори{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="menu">
+        <h3>Категорія</h3>
+        <ul>
+            <li>
+                <a href="{% url 'main' %}?category=All" {% if category_filter == "All" or not category_filter %}class="active"{% endif %}>Усі</a>
+            </li>
+            <li>
+                <a href="{% url 'main' %}?category=Authors" {% if category_filter == "Authors" %}class="active"{% endif %}>Автори</a>
+            </li>
+            <li>
+                <a href="{% url 'main' %}?category=Fantasy" {% if category_filter == "Fantasy" %}class="active"{% endif %}>Фентезі</a>
+            </li>
+            <li>
+                <a href="{% url 'main' %}?category=Science Fiction" {% if category_filter == "Science Fiction" %}class="active"{% endif %}>Наукова фантастика</a>
+            </li>
+            <li>
+                <a href="{% url 'main' %}?category=Historical" {% if category_filter == "Historical" %}class="active"{% endif %}>Історичні</a>
+            </li>
+            <li>
+                <a href="{% url 'main' %}?category=Adventure" {% if category_filter == "Adventure" %}class="active"{% endif %}>Пригоди</a>
+            </li>
+            <li>
+                <a href="{% url 'main' %}?category=Mystery" {% if category_filter == "Mystery" %}class="active"{% endif %}>Містика</a>
+            </li>
+            <li>
+                <a href="{% url 'main' %}?category=Romance" {% if category_filter == "Romance" %}class="active"{% endif %}>Романтика</a>
+            </li>
+            <li>
+                <a href="{% url 'main' %}?category=Horror" {% if category_filter == "Horror" %}class="active"{% endif %}>Жахи</a>
+            </li>
+            <li>
+                <a href="{% url 'main' %}?category=Biography" {% if category_filter == "Biography" %}class="active"{% endif %}>Біографія</a>
+            </li>
+            <li>
+                <a href="{% url 'main' %}?category=Poetry" {% if category_filter == "Poetry" %}class="active"{% endif %}>Поезія</a>
+            </li>
+            <li>
+                <a href="{% url 'main' %}?category=Drama" {% if category_filter == "Drama" %}class="active"{% endif %}>Драма</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <div class="search-container">
+            <form method="GET" action="{% url 'main' %}" class="search-form">
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search books..."
+                    value="{{ search_query }}"
+                    class="search-input"
+                >
+                <button type="submit" class="search-btn">Пошук</button>
+            </form>
+        </div>
+
+        {% if user.is_authenticated and user.is_staff %}
+        <a href="{% url 'add_author' %}" class="add-book-btn">Додати автора</a>
+        {% endif %}
+
+        <div class="books-list">
+            {% for author in authors %}
+            <div class="book-card">
+                {% if author.photo %}
+                    <img src="{{ author.photo.url }}" alt="{{ author.name }} Photo" class="book-cover">
+                {% endif %}
+                <h2>{{ author.name }}</h2>
+                <p>{{ author.biography|truncatechars:100 }}</p>
+                <a href="{% url 'author_detail' author.pk %}" class="read-btn">Докладніше</a>
+                {% if user.is_authenticated and user.is_staff %}
+                    <a href="{% url 'edit_author' author.pk %}" class="edit-btn">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <a href="{% url 'delete_author' author.pk %}" class="delete-btn">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                {% endif %}
+            </div>
+            {% empty %}
+            <p>Немає авторів.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

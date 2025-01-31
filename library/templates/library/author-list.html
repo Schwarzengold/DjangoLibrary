@@ -1,8 +1,11 @@
 {% extends "library/base.html" %}
 
 {% block content %}
-<h2>Authors</h2>
-<a href="{% url 'add_author' %}" class="add-book-btn">Add New Author</a>
+<h2>Автори</h2>
+
+{% if user.is_authenticated and user.is_staff %}
+    <a href="{% url 'add_author' %}" class="add-book-btn">Додати автора</a>
+{% endif %}
 
 <div class="books-list">
     {% for author in authors %}
@@ -12,7 +15,7 @@
         {% endif %}
         <h2>{{ author.name }}</h2>
         <p>{{ author.biography|truncatechars:100 }}</p>
-        <a href="{% url 'author_detail' author.pk %}" class="read-btn">Read More</a>
+        <a href="{% url 'author_detail' author.pk %}" class="read-btn">Докладніше</a>
         {% if user.is_authenticated and user.is_staff %}
             <a href="{% url 'edit_author' author.pk %}" class="edit-btn">&#9998;</a>
             <a href="{% url 'delete_author' author.pk %}" class="delete-btn">&#128465;</a>
