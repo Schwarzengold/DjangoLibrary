@@ -39,7 +39,6 @@
 
 <div class="book-detail-container">
     <div class="book-detail">
-        <!-- Если есть фото автора -->
         {% if author.photo %}
             <div style="text-align: center; margin-bottom: 20px;">
                 <img src="{{ author.photo.url }}" alt="{{ author.name }}" style="
@@ -139,7 +138,7 @@
         font-size: 16px;
         color: #666;
         margin-bottom: 20px;
-        white-space: pre-wrap; /* чтобы переводы строк внутри биографии отображались */
+        white-space: pre-wrap;
     }
 </style>
 </body>

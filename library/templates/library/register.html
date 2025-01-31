@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Реєстрація</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -104,10 +104,10 @@
 </head>
 <body>
     <div class="register-container">
-        <h2>Create Account</h2>
+        <h2>Створити аккаунт</h2>
         <form method="post">
             {% csrf_token %}
-            <label for="id_username">Username:</label>
+            <label for="id_username">Логін:</label>
             <div class="form-group">
                 {{ form.username }}
             </div>
@@ -117,7 +117,7 @@
             </div>
             {% endif %}
 
-            <label for="id_first_name">First Name:</label>
+            <label for="id_first_name">Ім'я:</label>
             <div class="form-group">
                 {{ form.first_name }}
             </div>
@@ -127,7 +127,7 @@
             </div>
             {% endif %}
 
-            <label for="id_last_name">Last Name (optional):</label>
+            <label for="id_last_name">Прізвище:</label>
             <div class="form-group">
                 {{ form.last_name }}
             </div>
@@ -147,7 +147,7 @@
             </div>
             {% endif %}
 
-            <label for="id_password1">Password:</label>
+            <label for="id_password1">Пароль:</label>
             <div class="form-group">
                 {{ form.password1 }}
                 <span class="toggle-password" onclick="togglePassword('id_password1')">👁️</span>
@@ -158,7 +158,7 @@
             </div>
             {% endif %}
 
-            <label for="id_password2">Confirm Password:</label>
+            <label for="id_password2">Підтвердити пароль:</label>
             <div class="form-group">
                 {{ form.password2 }}
                 <span class="toggle-password" onclick="togglePassword('id_password2')">👁️</span>
@@ -169,7 +169,7 @@
             </div>
             {% endif %}
 
-            <button type="submit">Register</button>
+            <button type="submit">Зареєструвати</button>
         </form>
     </div>
 

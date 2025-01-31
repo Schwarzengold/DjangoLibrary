@@ -14,7 +14,6 @@ def main(request):
         "Adventure", "Mystery", "Romance", "Horror", "Biography", "Poetry", "Drama"
     ]
     if category_filter == "Authors":
-        # Если выбрана категория "Authors", передаём в контекст список авторов
         authors = Author.objects.all()
         if search_query:
             authors = authors.filter(name__icontains=search_query)
@@ -38,10 +37,6 @@ def main(request):
         })
 
 def author_list(request):
-    """
-    Отдельная страница для отображения списка авторов.
-    Если нужна отдельная URL для авторів, можно использовать эту функцию.
-    """
     search_query = request.GET.get('search', '')
     authors = Author.objects.all()
     if search_query:

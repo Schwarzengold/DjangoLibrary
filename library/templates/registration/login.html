@@ -82,7 +82,7 @@
 </head>
 <body>
     <div class="login-container">
-        <h2>Login</h2>
+        <h2>Увійти</h2>
         <form method="post">
             {% csrf_token %}
             {% if form.non_field_errors %}
@@ -91,7 +91,7 @@
             </div>
             {% endif %}
             
-            <label for="id_username">Username:</label>
+            <label for="id_username">Логін:</label>
             <div class="form-group">
                 {{ form.username }}
             </div>
@@ -101,7 +101,7 @@
             </div>
             {% endif %}
 
-            <label for="id_password">Password:</label>
+            <label for="id_password">Пароль:</label>
             <div class="form-group">
                 {{ form.password }}
             </div>
@@ -111,7 +111,7 @@
             </div>
             {% endif %}
 
-            <button type="submit">Login</button>
+            <button type="submit">Увійти</button>
         </form>
     </div>
 </body>
